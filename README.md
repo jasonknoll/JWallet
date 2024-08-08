@@ -1,7 +1,7 @@
 # JWallet
 A way to generate paper wallets in your CLI
 
-**WARNING** JWallet is a hobby project and may be unstable at times. Use at your own risk.
+**WARNING** *JWallet is a hobby project and may be unstable at times. Use at your own risk.*
 
 JWallet is a CLI tool dedicated to securely generating paper wallets 
 for popular cryptocurrencies. A *paper wallet* is all the information 
