@@ -4,5 +4,14 @@
 
 # TODO actually finish this
 
+import argparse
+import bitcoinlib
+import eth_account
+import requests
+import qrcode
 
 
+def generate_qr_code(data):
+    qr = qrcode.make(data)
+
+    # qr.save("wallet.png")
