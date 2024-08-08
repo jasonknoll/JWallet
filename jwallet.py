@@ -22,13 +22,19 @@ def generate_eth_account():
     # Create a private key and address combo, with a random number for extra randomness
     wallet = eth_account.Account.create(os.urandom(32))
 
-    # print(f"Key: {wallet.key.hex()}\nAddress: {wallet.address}")
-    # TODO display address and key in secure way, with warning before exit
+    print(f"Key: 0x{wallet.key.hex()}\nAddress: {wallet.address}")
+    # TODO display address and key  with warning before exit
     # NOTE make sure to check that wallet doesn't exist and that it doesn't
     # save to bash history
+
+
+def generate_etc_account():
+    pass
 
 
 def generate_btc_account():
     pass
 
+
+#generate_eth_account()
 
