@@ -35,7 +35,6 @@ def generate_eth_account():
     # Create a private key and address combo, with a random number for extra randomness
     wallet = eth_account.Account.create(os.urandom(32))
 
-    #print(f"Key: 0x{wallet.key.hex()}\nAddress: {wallet.address}")
     # TODO display address and key  with warning before exit
     # NOTE make sure to check that wallet doesn't exist and that it doesn't
     # save to bash history
@@ -51,6 +50,7 @@ def generate_eth_account():
     print("Do NOT give anyone your private key.")
     while True:
         enter = input("Press enter to leave this screen...")
+        confirm = input("Are you sure? (hit enter again to confirm)")
         break
     os.system('clear')
 
@@ -65,5 +65,27 @@ def generate_btc_account():
     pass
 
 
-generate_eth_account()
+#generate_eth_account()
+
+def main():
+    parser = argparse.ArgumentParser(
+                prog="JWallet",
+                description="A CLI tool built for securely generating paper wallets"
+            )
+
+    parser.add_argument("-c", "--coin", help="The selected cyrptocurrency. (eth only for now)")
+    parser.add_argument("--from_key")
+
+    args = parser.parse_args()
+    
+    if (not args.coin):
+        raise Exception("Coin not recognized")
+
+    if (args.coin.lower() == "eth"):
+        generate_eth_account()
+     
+
+if (__name__ == '__main__'):
+    main()
+
 
