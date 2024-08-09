@@ -88,7 +88,7 @@ def generate_btc_account():
 
 
 def generate_ltc_account():
-    bitcoinlibe.wallets.wallet_delete_if_exists('litecoin_wallet')
+    bitcoinlib.wallets.wallet_delete_if_exists('litecoin_wallet')
     wallet = Wallet.create('litecoin_wallet', network='litecoin')
 
     key = wallet.new_key()
@@ -117,6 +117,11 @@ def main():
         generate_eth_account()
     elif (args.coin.lower() == "btc"):
         generate_btc_account()
+    elif (args.coin.lower() == "ltc"):
+        generate_ltc_account()
+    else:
+        print(f"Coin {args.coin} not recognized")
+
 
 if (__name__ == '__main__'):
     main()
