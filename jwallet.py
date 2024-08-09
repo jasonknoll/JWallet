@@ -31,7 +31,7 @@ def wallet_info_prompt(priv_key=None,addr=None,coin="eth"):
     if coin == "eth":
         print(f"Key: 0x{priv_key.hex()}\nAddress: {addr}")  
 
-    elif coin == "btc":
+    elif coin == "btc" or coin == "ltc":
         print(f"Key: {priv_key}\nAddress: {addr}") 
 
     print("Take note of these! After you leave this screen, you won't see them again!")
@@ -88,7 +88,12 @@ def generate_btc_account():
 
 
 def generate_ltc_account():
-    pass
+    bitcoinlibe.wallets.wallet_delete_if_exists('litecoin_wallet')
+    wallet = Wallet.create('litecoin_wallet', network='litecoin')
+
+    key = wallet.new_key()
+
+    wallet_info_prompt(priv_key=key.key_private.hex(), addr=key.address, coin="ltc")
 
 
 
