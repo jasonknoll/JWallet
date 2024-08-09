@@ -26,18 +26,22 @@ def generate_qr_code(data):
 
 
 def wallet_info_prompt(priv_key=None,addr=None,coin="eth"):
-    if coin == "eth":
-        os.system('clear')
-        print(f"Key: 0x{priv_key.hex()}\nAddress: {addr}")      
-        print("Take note of these! After you leave this screen, you won't see them again!") 
-        print("You may generate the address from the private key later on.")
-        print("Do NOT give anyone your private key.")
-        while True:                                                                 
-            enter = input("Press enter to leave this screen...")                            
-            confirm = input("Are you sure? (hit enter again to confirm)")
-            break                                                                           
-        os.system('clear')  
+    os.system('clear')
 
+    if coin == "eth":
+        print(f"Key: 0x{priv_key.hex()}\nAddress: {addr}")  
+
+    elif coin == "btc":
+        print(f"Key: {priv_key}\nAddress: {addr}") 
+
+    print("Take note of these! After you leave this screen, you won't see them again!")
+    print("You may generate the address from the private key later on.")
+    print("Do NOT give anyone your private key.")
+    while True: 
+        enter = input("Press enter to leave this screen...")
+        confirm = input("Are you sure? (hit enter again to confirm)")
+        break
+    os.system('clear') 
 
 def check_existing_eth_account(address):
     url = f'https://api.etherscan.io/api?module=account&action=txlist&address={address}&sort=asc&apikey={ETHERSCAN_API_KEY}'
@@ -73,7 +77,19 @@ def generate_etc_account():
 
 
 def generate_btc_account():
+    bitcoinlib.wallets.wallet_delete_if_exists('bitcoin_wallet') 
+    wallet = Wallet.create('bitcoin_wallet')
+    
+    # TODO check if wallet exists first
+
+    key = wallet.new_key()
+
+    wallet_info_prompt(priv_key=key.key_private.hex(), addr=key.address, coin="btc")
+
+
+def generate_ltc_account():
     pass
+
 
 
 #generate_eth_account()
@@ -94,7 +110,8 @@ def main():
 
     if (args.coin.lower() == "eth"):
         generate_eth_account()
-     
+    elif (args.coin.lower() == "btc"):
+        generate_btc_account()
 
 if (__name__ == '__main__'):
     main()
