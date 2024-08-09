@@ -21,10 +21,7 @@ I never liked the idea of my wallet being kept track of by some central server
 connected to a personal account. Isn't the point of crypto to be decentralized? 
 And to be used as a currency? Not an investment? 
 
-I want to make something safe, secure and disconnected. Plus, I just enjoy using
-the command line. 
-
-<!--I have my own opinions about the state of crypto and definitely they play a role
+I have my own opinions about the state of crypto, and they play a role
 as to way I don't interract much with it.
 
 I'm not much of a crypto investor, but I've always had 
