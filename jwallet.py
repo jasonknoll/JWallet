@@ -29,7 +29,7 @@ def wallet_info_prompt(priv_key=None,addr=None,coin="eth"):
     os.system('clear')
 
     if coin == "eth":
-        print(f"Key: 0x{priv_key.hex()}\nAddress: {addr}")  
+        print(f"Key: {priv_key.hex()}\nAddress: {addr}")  
 
     elif coin == "btc" or coin == "ltc":
         print(f"Key: {priv_key}\nAddress: {addr}") 
