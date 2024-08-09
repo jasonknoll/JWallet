@@ -1,6 +1,6 @@
-# TODO Support BTC, ETH, ETC, and USDT
+# TODO Add ETC and USDT
 # TODO upon generating an address, check with a blockchain API to see if it already exists
-# TODO setup argparse to handle CLI arguments
+# TODO Potentially add things like balance and transactions
 
 # TODO actually finish this
 
@@ -31,7 +31,7 @@ def wallet_info_prompt(priv_key=None,addr=None,coin="eth"):
     if coin == "eth":
         print(f"Key: {priv_key.hex()}\nAddress: {addr}")  
 
-    elif coin == "btc" or coin == "ltc":
+    elif coin == "btc" or coin == "ltc" or coin == "doge":
         print(f"Key: {priv_key}\nAddress: {addr}") 
 
     print("Take note of these! After you leave this screen, you won't see them again!")
@@ -96,8 +96,17 @@ def generate_ltc_account():
     wallet_info_prompt(priv_key=key.key_private.hex(), addr=key.address, coin="ltc")
 
 
+def generate_doge_account():
+    bitcoinlib.wallets.wallet_delete_if_exists('dogecoin_wallet')
+    wallet = Wallet.create('dogecoin_wallet', network='dogecoin')
+
+    key = wallet.new_key()
+
+    wallet_info_prompt(priv_key=key.key_private.hex(), addr=key.address, coin='doge')
+
 
 #generate_eth_account()
+
 
 def main():
     parser = argparse.ArgumentParser(
@@ -105,7 +114,9 @@ def main():
                 description="A CLI tool built for securely generating paper wallets"
             )
 
-    parser.add_argument("-c", "--coin", help="The selected cyrptocurrency. (eth only for now)")
+    parser.add_argument("-c", "--coin", help="The selected cyrptocurrency")
+
+    # TODO add generating wallet from existing priv key
     parser.add_argument("--from_key")
 
     args = parser.parse_args()
@@ -119,6 +130,8 @@ def main():
         generate_btc_account()
     elif (args.coin.lower() == "ltc"):
         generate_ltc_account()
+    elif (args.coin.lower() == "doge"):
+        generate_doge_account()
     else:
         print(f"Coin {args.coin} not recognized")
 
