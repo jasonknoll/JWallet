@@ -45,17 +45,6 @@ def wallet_info_prompt(priv_key=None,addr=None,coin="etc"):
         break
     os.system('clear') 
 
-def check_existing_eth_account(address):
-    url = f'https://api.etherscan.io/api?module=account&action=txlist&address={address}&sort=asc&apikey={ETHERSCAN_API_KEY}'
-
-    # 
-    response = requests.get(url)
-    if response.status_code == 200:
-        data = response.json()
-        if data['status'] == '1':
-            return True
-    
-    return False
 
 # Probalby just gonna call the eth one as well
 def generate_etc_account():
