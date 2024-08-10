@@ -8,6 +8,8 @@ import argparse
 import bitcoinlib
 from bitcoinlib.wallets import Wallet
 import eth_account
+import web3
+from web3 import Web3
 import requests
 import qrcode
 import os
@@ -25,10 +27,10 @@ def generate_qr_code(data):
     # qr.save("wallet.png")
 
 
-def wallet_info_prompt(priv_key=None,addr=None,coin="eth"):
+def wallet_info_prompt(priv_key=None,addr=None,coin="etc"):
     os.system('clear')
 
-    if coin == "eth":
+    if coin == "etc":
         print(f"Key: {priv_key.hex()}\nAddress: {addr}")  
 
     elif coin == "btc" or coin == "ltc" or coin == "doge":
@@ -55,27 +57,25 @@ def check_existing_eth_account(address):
     
     return False
 
-def generate_eth_account():
-    # Create a private key and address combo, with a random number for extra randomness
-    wallet = eth_account.Account.create(os.urandom(32))
-
-    # TODO display address and key  with warning before exit
-    # NOTE make sure to check that wallet doesn't exist and that it doesn't
-    # save to bash history
-
-    if (check_existing_eth_account(wallet.address)):
-        print("wow! that wallet address already exists. Trying again!")
-        generate_eth_account()
-
-    wallet_info_prompt(priv_key=wallet.key, addr=wallet.address)
-
-
-
 # Probalby just gonna call the eth one as well
 def generate_etc_account():
-    pass
+    wallet = eth_account.Account.create(os.urandom(32))
+
+    w3 = Web3(Web3.HTTPProvider('http://localhost:8545'))
+
+    if not w3.is_connected():
+        raise Exception("Could not connect to node!")
+
+    account = w3.is_address(wallet.address)
+
+    if account:
+        wallet_info_prompt(priv_key=wallet.key, addr=wallet.address)
+
+    #print(f"New Wallet balance: {w3.eth.get_balance(wallet.address)}!")
 
 
+# TODO Consolidate into one function
+# TODO Check if address already exists 
 def generate_btc_account():
     bitcoinlib.wallets.wallet_delete_if_exists('bitcoin_wallet') 
     wallet = Wallet.create('bitcoin_wallet')
@@ -124,14 +124,14 @@ def main():
     if (not args.coin):
         raise Exception("Coin not recognized")
 
-    if (args.coin.lower() == "eth"):
-        generate_eth_account()
-    elif (args.coin.lower() == "btc"):
+    if (args.coin.lower() == "btc"):
         generate_btc_account()
     elif (args.coin.lower() == "ltc"):
         generate_ltc_account()
     elif (args.coin.lower() == "doge"):
         generate_doge_account()
+    elif (args.coin.lower() == "etc"):
+        generate_etc_account()
     else:
         print(f"Coin {args.coin} not recognized")
 
