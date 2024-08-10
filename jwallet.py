@@ -33,7 +33,7 @@ def wallet_info_prompt(priv_key=None,addr=None,coin="etc"):
     if coin == "etc":
         print(f"Key: {priv_key.hex()}\nAddress: {addr}")  
 
-    elif coin == "btc" or coin == "ltc" or coin == "doge":
+    elif coin == "bitcoin" or coin == "litecoin" or coin == "dogecoin":
         print(f"Key: {priv_key}\nAddress: {addr}") 
 
     print("Take note of these! After you leave this screen, you won't see them again!")
@@ -73,36 +73,19 @@ def generate_etc_account():
 
     #print(f"New Wallet balance: {w3.eth.get_balance(wallet.address)}!")
 
+def generate_coin_account(coin="bitcoin"):
+    bitcoinlib.wallets.wallet_delete_if_exists('jwallet')
 
-# TODO Consolidate into one function
-# TODO Check if address already exists 
-def generate_btc_account():
-    bitcoinlib.wallets.wallet_delete_if_exists('bitcoin_wallet') 
-    wallet = Wallet.create('bitcoin_wallet')
-    
-    # TODO check if wallet exists first
+    coins = ['bitcoin', 'litecoin', 'dogecoin']
 
-    key = wallet.new_key()
+    if coin not in coins:
+        raise Exception(f"Error! {coin} not supported!")
 
-    wallet_info_prompt(priv_key=key.key_private.hex(), addr=key.address, coin="btc")
-
-
-def generate_ltc_account():
-    bitcoinlib.wallets.wallet_delete_if_exists('litecoin_wallet')
-    wallet = Wallet.create('litecoin_wallet', network='litecoin')
+    wallet = Wallet.create('jwallet', network=coin)
 
     key = wallet.new_key()
 
-    wallet_info_prompt(priv_key=key.key_private.hex(), addr=key.address, coin="ltc")
-
-
-def generate_doge_account():
-    bitcoinlib.wallets.wallet_delete_if_exists('dogecoin_wallet')
-    wallet = Wallet.create('dogecoin_wallet', network='dogecoin')
-
-    key = wallet.new_key()
-
-    wallet_info_prompt(priv_key=key.key_private.hex(), addr=key.address, coin='doge')
+    wallet_info_prompt(priv_key=key.key_private.hex(), addr=key.address, coin=coin)
 
 
 #generate_eth_account()
@@ -125,11 +108,11 @@ def main():
         raise Exception("Coin not recognized")
 
     if (args.coin.lower() == "btc"):
-        generate_btc_account()
+        generate_coin_account("bitcoin")
     elif (args.coin.lower() == "ltc"):
-        generate_ltc_account()
+        generate_coin_account("litecoin")
     elif (args.coin.lower() == "doge"):
-        generate_doge_account()
+        generate_coin_account("dogecoin")
     elif (args.coin.lower() == "etc"):
         generate_etc_account()
     else:
