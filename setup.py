@@ -2,14 +2,14 @@ from setuptools import setup, find_packages
 
 setup(
     name='jwallet',
-    version='0.1.13',
-    packages=find_packages(),
+    version='0.1.15',
+    packages=['jwallet'],
     
-    #entry_points={
-     #   'console_scripts': [
-      #      'jwallet=jwallet.jwallet',
-     #   ],
-    #},
+    entry_points={
+        'console_scripts': [
+            'jwallet=jwallet.jwallet:main',
+        ],
+    },
     install_requires=[
         "web3",
         "argparse",
