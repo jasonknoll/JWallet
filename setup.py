@@ -2,17 +2,18 @@ from setuptools import setup, find_packages
 
 setup(
     name='jwallet',
-    version='0.1.0',
+    version='0.1.13',
     packages=find_packages(),
-    entry_points={
-        'console_scripts': [
-            'jwallet=jwallet.wallet:main',
-        ],
-    },
+    
+    #entry_points={
+     #   'console_scripts': [
+      #      'jwallet=jwallet.jwallet',
+     #   ],
+    #},
     install_requires=[
         "web3",
         "argparse",
-        "dotenv",
+        "python-dotenv",
         "bitcoinlib",
         "eth-account"
     ],
@@ -23,6 +24,7 @@ setup(
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
     url='https://github.com/jasonknoll/jwallet',
+    license="MIT",
     classifiers=[
         'Programming Language :: Python :: 3',
         'License :: OSI Approved :: MIT License',
