@@ -1,6 +1,7 @@
 # TODO Add USDT
 # TODO See if there are any cool data points to display upon creation
 # TODO Potentially add things like balance and transaction
+# TODO Add support for mnemonic key and backup wallets
 # NOTE My main focus is around ocld storage, but should I store wallets too?
 
 import argparse
