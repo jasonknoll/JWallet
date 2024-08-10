@@ -1,8 +1,7 @@
-# TODO Add ETC and USDT
-# TODO upon generating an address, check with a blockchain API to see if it already exists
-# TODO Potentially add things like balance and transactions
-
-# TODO actually finish this
+# TODO Add USDT
+# TODO See if there are any cool data points to display upon creation
+# TODO Potentially add things like balance and transaction
+# NOTE My main focus is around ocld storage, but should I store wallets too?
 
 import argparse
 import bitcoinlib
@@ -36,7 +35,7 @@ def wallet_info_prompt(priv_key=None,addr=None,coin="etc"):
     elif coin == "bitcoin" or coin == "litecoin" or coin == "dogecoin":
         print(f"Key: {priv_key}\nAddress: {addr}") 
 
-    print("Take note of these! After you leave this screen, you won't see them again!")
+    print("TAKE NOTE of these values! After you leave this screen, you won't see them again!")
     print("You may generate the address from the private key later on.")
     print("Do NOT give anyone your private key.")
     while True: 
@@ -46,7 +45,6 @@ def wallet_info_prompt(priv_key=None,addr=None,coin="etc"):
     os.system('clear') 
 
 
-# Probalby just gonna call the eth one as well
 def generate_etc_account():
     wallet = eth_account.Account.create(os.urandom(32))
 
@@ -62,6 +60,7 @@ def generate_etc_account():
 
     #print(f"New Wallet balance: {w3.eth.get_balance(wallet.address)}!")
 
+
 def generate_coin_account(coin="bitcoin"):
     bitcoinlib.wallets.wallet_delete_if_exists('jwallet')
 
@@ -75,9 +74,6 @@ def generate_coin_account(coin="bitcoin"):
     key = wallet.new_key()
 
     wallet_info_prompt(priv_key=key.key_private.hex(), addr=key.address, coin=coin)
-
-
-#generate_eth_account()
 
 
 def main():
