@@ -15,9 +15,9 @@ encryption that comes along with it.
 ## How to Use
 `python3 jwallet.py -c <coin>` <br>
 JWallet currently generates wallets for:
-- Ethereum Classic
-- Bitcoin
-- Litecoin
-- Dogecoin
+- Ethereum Classic `etc`
+- Bitcoin `btc`
+- Litecoin `ltc`
+- Dogecoin `doge`
 
 
