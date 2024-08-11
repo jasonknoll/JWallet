@@ -52,7 +52,9 @@ def wallet_info_prompt(priv_key=None,pub_key=None,addr=None,coin="etc"):
 def generate_etc_account():
     wallet = eth_account.Account.create(os.urandom(32))
 
-
+    '''
+    # NOTE this needs to be node-less
+    # TODO Add flag to allow connection to node
     w3 = Web3(Web3.HTTPProvider('http://localhost:8545'))
 
     if not w3.is_connected():
@@ -63,6 +65,9 @@ def generate_etc_account():
     if account:
         wallet_info_prompt(priv_key=wallet.key, addr=wallet.address)
 
+    '''
+
+    wallet_info_prompt(priv_key=wallet.key, addr=wallet.address)
     #print(f"New Wallet balance: {w3.eth.get_balance(wallet.address)}!")
 
 
