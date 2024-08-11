@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='jwallet',
-    version='0.1.15',
+    version='0.1.16',
     packages=['jwallet'],
     
     entry_points={

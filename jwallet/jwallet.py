@@ -7,6 +7,7 @@
 import argparse
 import bitcoinlib
 from bitcoinlib.wallets import Wallet
+import base58
 import eth_account
 import web3
 from web3 import Web3
@@ -27,14 +28,16 @@ def generate_qr_code(data):
     # qr.save("wallet.png")
 
 
-def wallet_info_prompt(priv_key=None,addr=None,coin="etc"):
+def wallet_info_prompt(priv_key=None,pub_key=None,addr=None,coin="etc"):
     os.system('clear')
 
     if coin == "etc":
         print(f"Key: {priv_key.hex()}\nAddress: {addr}")  
 
     elif coin == "bitcoin" or coin == "litecoin" or coin == "dogecoin":
-        print(f"Key: {priv_key}\nAddress: {addr}") 
+        print(f"-----Cyrpto Wallet: {coin}----\n")
+
+        print(f"Private: {priv_key}\nPublic: {pub_key}\nAddress: {addr}") 
 
     print("TAKE NOTE of these values! After you leave this screen, you won't see them again!")
     print("You may generate the address from the private key later on.")
@@ -48,6 +51,7 @@ def wallet_info_prompt(priv_key=None,addr=None,coin="etc"):
 
 def generate_etc_account():
     wallet = eth_account.Account.create(os.urandom(32))
+
 
     w3 = Web3(Web3.HTTPProvider('http://localhost:8545'))
 
@@ -72,9 +76,19 @@ def generate_coin_account(coin="bitcoin"):
 
     wallet = Wallet.create('jwallet', network=coin)
 
-    key = wallet.new_key()
+    key = wallet.get_key() # Returns WalletKey object
 
-    wallet_info_prompt(priv_key=key.key_private.hex(), addr=key.address, coin=coin)
+    # key.wif # BIP32 Private key (xprv) *as long as public() has not been called
+    # key.key() # HDKey?
+    # key.key_public/key_private # binary shit
+    # key.key().wif() public key (xpub)
+    # NOTE do not call key.public() as it will change it to a public key
+
+    pub_wif = key.key().wif()
+
+    priv_wif = key.key().wif_key() 
+
+    wallet_info_prompt(priv_key=priv_wif,pub_key=pub_wif, addr=key.address, coin=coin)
 
 
 def main():
