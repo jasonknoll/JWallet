@@ -13,7 +13,7 @@ I think it could be fun to try to handle locally stored wallets and the
 encryption that comes along with it.
 
 ## How to Use
-`jwallet.py -c <coin>` <br>
+`jwallet -c <coin>` <br>
 JWallet currently generates wallets for:
 - Ethereum Classic `etc`
 - Bitcoin `btc`
